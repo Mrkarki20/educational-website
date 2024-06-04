@@ -1,0 +1,30 @@
+/* styles.css */
+body {
+    font-family: Arial, sans-serif;
+}
+
+#upload-form {
+    width: 50%;
+    margin: 40px auto;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#notes-container {
+    margin-top: 20px;
+}
+
+.note-card {
+    background-color: #f7f7f7;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.note-card:hover {
+    background-color: #fff;
+    cursor: pointer;
+}

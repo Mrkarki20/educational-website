@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Notes</title>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.134.0.min.js"></script>
+</head>
+<body>
+    <h1>Upload Notes</h1>
+    <form id="upload-form">
+        <label for="subject">Subject:</label>
+        <input type="text" id="subject" name="subject"><br><br>
+        <label for="portion">Portion:</label>
+        <input type="text" id="portion" name="portion"><br><br>
+        <label for="chapter">Chapter:</label>
+        <input type="text" id="chapter" name="chapter"><br><br>
+        <label for="notes">Notes:</label>
+        <input type="file" id="notes" name="notes"><br><br>
+        <button id="upload-btn">Upload Notes</button>
+    </form>
+
+    <script>
+        const form = document.getElementById('upload-form');
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const subject = document.getElementById('subject').value;
+            const portion = document.getElementById('portion').value;
+            const chapter = document.getElementById('chapter').value;
+            const notes = document.getElementById('notes').files[0];
+
+            const s3_client = new AWS.S3({
+                accessKeyId: 'YOUR_ACCESS_KEY_ID',
+                secretAccessKey: 'YOUR_SECRET_ACCESS_KEY',
+                region: 'ca-central-1'
+            });
+
+            const file_location = `${subject}/${portion}/${chapter}/${notes.name}`;
+            s3_client.putObject({
+                Bucket: 'tudent-uploads',
+                Key: file_location,
+                Body: notes
+            }, (err, data) => {
+                if (err) {
+                    console.log(err);
+                } else {
+                    console.log('Notes uploaded successfully!');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
